@@ -1,0 +1,17 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { Check, Languages, Moon, Settings2, Sun, Type, Minus, Plus, RotateCcw } from "lucide-react";
+import { useSiteLanguage } from "@/components/language-provider";
+export function SettingsMenu() {
+ const [open,setOpen]=useState(false); const {language,setLanguage}=useSiteLanguage(); const {resolvedTheme,setTheme}=useTheme(); const dark=resolvedTheme==="dark";
+ const [fontScale,setFontScale]=useState<number|null>(null);
+ useEffect(()=>{const saved=Number(window.localStorage.getItem("hussein-reading-scale"));setFontScale(Number.isFinite(saved)&&saved>=0.9&&saved<=1.2?saved:1);},[]);
+ useEffect(()=>{if(fontScale===null)return;document.documentElement.style.setProperty("--reading-scale",String(fontScale));window.localStorage.setItem("hussein-reading-scale",String(fontScale));},[fontScale]);
+ return <div className="settings-wrap"><button className="icon-button settings-trigger" type="button" aria-label={language==="ar"?"إعدادات العرض واللغة":"Display and language settings"} aria-expanded={open} onClick={()=>setOpen(v=>!v)}><Settings2 size={18}/></button>{open&&<><button className="settings-dismiss" type="button" aria-label="Close settings" onClick={()=>setOpen(false)}/><section className="settings-panel" role="dialog" aria-label={language==="ar"?"الإعدادات":"Settings"}>
+ <div className="settings-panel-heading"><strong>{language==="ar"?"إعدادات العرض":"Display settings"}</strong><span>{language==="ar"?"اختر ما يناسبك":"Choose your preference"}</span></div>
+ <div className="settings-group"><div className="settings-label"><Languages size={15}/>{language==="ar"?"اللغة":"Language"}</div><div className="settings-options"><button className={language==="ar"?"settings-option selected":"settings-option"} onClick={()=>setLanguage("ar")}>العربية {language==="ar"&&<Check size={14}/>}</button><button className={language==="en"?"settings-option selected":"settings-option"} onClick={()=>setLanguage("en")}>English {language==="en"&&<Check size={14}/>}</button></div></div>
+ <div className="settings-group"><div className="settings-label"><Sun size={15}/>{language==="ar"?"المظهر":"Appearance"}</div><div className="settings-options"><button className={!dark?"settings-option selected":"settings-option"} onClick={()=>setTheme("light")}><Sun size={15}/>{language==="ar"?"نهاري":"Light"}{!dark&&<Check size={14}/>}</button><button className={dark?"settings-option selected":"settings-option"} onClick={()=>setTheme("dark")}><Moon size={15}/>{language==="ar"?"ليلي":"Dark"}{dark&&<Check size={14}/>}</button></div></div>
+ <div className="settings-group"><div className="settings-label"><Type size={15}/>{language==="ar"?"حجم الخط":"Text size"}</div><div className="font-size-control"><button className="settings-option font-step" onClick={()=>setFontScale(v=>Math.max(.9,Math.round(((v??1)-.05)*100)/100))} aria-label="Decrease text size"><Minus size={16}/></button><span className="font-size-value">{Math.round((fontScale??1)*100)}%</span><button className="settings-option font-step" onClick={()=>setFontScale(v=>Math.min(1.2,Math.round(((v??1)+.05)*100)/100))} aria-label="Increase text size"><Plus size={16}/></button><button className="settings-option font-reset" onClick={()=>setFontScale(1)}><RotateCcw size={14}/>{language==="ar"?"افتراضي":"Reset"}</button></div></div>
+ </section></>}</div>;
+}

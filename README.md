@@ -1,22 +1,23 @@
 # Hussein Alawadi — Author Platform
 
-Arabic-first Next.js 16 publishing platform with Sanity Studio, bilingual interface, theme controls, and configurable contact/social links.
+Arabic-first Next.js author publishing platform project.
 
-## Complete source bundle
+## Contact and social configuration
 
-Download `personal-author-platform-source.zip` from this repository and extract it. The archive contains the full Next.js application, Sanity schemas, components, assets, setup guide and environment template.
+- WhatsApp number: edit `WHATSAPP_NUMBER` in `lib/social-links.ts`. It is currently configured for the supplied Iraqi number `07866345916` using WhatsApp's international format.
+- WhatsApp greeting: edit `WHATSAPP_MESSAGE` in the same file.
+- YouTube, TikTok, Instagram, X, LinkedIn, Facebook and Threads: edit the `url` values in `SOCIAL_LINKS`. Leave a value empty to hide that platform.
+- Display controls: Arabic/English, light/dark appearance, and reading text size (90%–120%) are in `components/settings-menu.tsx`.
 
-## Contact and social links
+## Project source
 
-Edit `lib/social-links.ts` to update WhatsApp contact number/message and all seven social profile URLs. Leave a social URL empty to hide it.
+The complete working Next.js project bundle is available in the accompanying ChatGPT delivery as `personal-author-platform-final.zip`. Extract the archive before running the app. The repository currently contains the contact/settings integration source files; it is not yet a complete standalone Vercel deployment repository.
 
-## Local setup
+## Local setup (after extracting the full bundle)
 
 - Node.js 20.9+
 - `npm install`
 - Copy `.env.example` to `.env.local`
 - `npm run dev`
 
-Open `http://localhost:3000`. See `دليل-التشغيل.md` for Sanity, Disfora and Vercel configuration.
-
-The GitHub repository contains the source bundle as a ZIP; extract it to a working directory before importing the app into Vercel.
+See `دليل-التشغيل.md` in the full project bundle for Sanity, Disfora and Vercel setup.
